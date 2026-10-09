@@ -99,6 +99,7 @@ module device_phy_link #(
         .fifo_read(rx_fifo_read),
         .read_done(rx_read_done),
         .accept_data(accept_data),
+        .fifo_rst_in(fifo_rst_n),
         .phy_data(rx_data),
         .fifo_out(rx_fifo_out),
         .pid(rx_pid),

@@ -1,6 +1,6 @@
-// 2'b01 = low speed
-// 2'b10 = full speed
-// 2'b11 = high speed
+
+
+
 
 module tx (
     input clk, rst_n, transfering,

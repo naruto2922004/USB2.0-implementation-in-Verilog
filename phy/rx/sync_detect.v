@@ -1,4 +1,4 @@
-// sync_detected is asserted for the entire length of the packet
+
 module sync_detect (
     input wire clk, rst_n, data_in, high_speed, idle,
     input [1:0] line_state,
@@ -37,9 +37,9 @@ module sync_detect (
                 3'b000:  ns = (high_speed && counter >= 5'd31 && !data_in) ? 3'b001 : 
                             (!high_speed && counter >= 5'd7 && !data_in) ? 3'b001 : 3'b000;
                 3'b001:  ns = (data_in) ? 3'b010 : 3'b000;
-                3'b010:  ns = (line_state == 2'b10) ? 3'b011 : 3'b010; // sync detected
+                3'b010:  ns = (line_state == 2'b10) ? 3'b011 : 3'b010; 
                 3'b011:  ns = (line_state == 2'b10) ? 3'b101 : 3'b100;
-                3'b100:  ns = (line_state == 2'b10) ? 3'b011 : 3'b100; // reload
+                3'b100:  ns = (line_state == 2'b10) ? 3'b011 : 3'b100; 
                 3'b101:  ns = (line_state == 2'b01) ? 3'b110 :(line_state == 2'b10) ? 3'b101 : 3'b100;
                 3'b110:  ns = 3'b000;
                 default: ns = 3'b000;
@@ -47,7 +47,7 @@ module sync_detect (
         end
     end
 
-    assign sync_detected = (ps == 3'b010) || (sync_buff);
+    assign sync_detected = (ps == 3'b010) || (ps == 3'b011) || (ps == 3'b100) || (ps == 3'b101);
     assign packet_done = (ps == 3'b110);
 
 endmodule

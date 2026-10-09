@@ -2,12 +2,12 @@ module phy_link #(
     parameter CLK_FREQ = 48_000_000,
     parameter MAX_SPEED = 2'b11
 )(
-    // Shared inputs
+    
     input clk,
     input por_rst_n,
     input connected,
     
-    // Device IOs
+    
     input dev_next_packet,
     input dev_tx_fifo_wr,
     input dev_rx_fifo_read,
@@ -25,7 +25,7 @@ module phy_link #(
     output dev_rst_n,
     output dev_data_pid_valid,
     
-    // Host IOs
+    
     input host_start_rst,
     input host_next_packet,
     input host_tx_fifo_wr,
@@ -47,7 +47,7 @@ module phy_link #(
     output w_idle
 );
 
-    // Internal wires for Bus interconnection
+    
     wire w_dp, w_dm;
     wire w_dev_tx_dp, w_dev_tx_dm, w_dev_en;
     wire w_host_tx_dp, w_host_tx_dm, w_host_en;

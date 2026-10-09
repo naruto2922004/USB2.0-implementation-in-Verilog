@@ -4,9 +4,9 @@ module phy_link_tb;
 
     localparam CLK_FREQ   = 48_000_000;
     localparam MAX_SPEED  = 2'b11;
-    localparam CLK_PERIOD = 2; // 50MHz sim clock, adjust if needed
+    localparam CLK_PERIOD = 2; 
 
-    // Shared inputs
+    
     reg clk;
     reg por_rst_n;
     reg connected;
@@ -44,8 +44,8 @@ module phy_link_tb;
     integer   i;
 
 
-    reg [8*24-1:0] tb_phase; // which top-level block of the sequence
-    reg [8*24-1:0] tb_stage; // fine-grained step within that block
+    reg [8*24-1:0] tb_phase; 
+    reg [8*24-1:0] tb_stage; 
 
 
     phy_link #(
@@ -170,7 +170,7 @@ module phy_link_tb;
         input [3:0] pid;
         integer idx;
         begin
-            // Load device TX FIFO
+            
             tb_stage = "D2H_LOAD_TX_FIFO";
             @(posedge clk);
             dev_tx_fifo_wr <= 1'b1;

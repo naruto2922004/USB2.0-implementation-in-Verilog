@@ -32,6 +32,7 @@ module bitstuffer (
             else if (one_count == 3'b110) begin
                 one_count <= 3'b000;
                 data_out <= 1'b0;
+                serial_valid_out <= 1'b1;
             end
         end
     end

@@ -2,12 +2,12 @@ module usb_mouse #(
     parameter CLK_FREQ = 48_000_000,
     parameter MAX_SPEED = 2'b11
 )(
-    // Global Signals
+    
     input wire clk,
     input wire por_rst_n,
     input wire connected,
 
-    // Host Side IOs (Software interface)
+    
     input  wire sw_request_valid,
     input  wire [63:0] sw_request,
     input  wire [6:0] sw_vacant_address,
@@ -25,7 +25,7 @@ module usb_mouse #(
     input  wire sw_rx_read_done,
     output wire [7:0] sw_rx_fifo_out,
 
-    // Device Side IOs (Endpoint interface)
+    
     input  wire [63:0] ep1_in,
     input  wire ep1_valid,
     output wire ep1_sent
@@ -33,7 +33,7 @@ module usb_mouse #(
 
 
     
-    // Host to PHY Link signals
+    
     wire idle;
     wire fifo_rst_n;
     wire host_start_rst;
@@ -52,7 +52,7 @@ module usb_mouse #(
     wire host_rx_data_pid_valid;
     wire host_rx_accept_data;           
 
-    // Device to PHY Link signals
+    
     wire dev_next_packet;
     wire dev_tx_fifo_wr;
     wire dev_rx_fifo_read;
@@ -71,7 +71,7 @@ module usb_mouse #(
     
 
 
-    // Center:Physical Link Layer
+    
     phy_link #(
         .CLK_FREQ(CLK_FREQ),
         .MAX_SPEED(MAX_SPEED)
@@ -80,7 +80,7 @@ module usb_mouse #(
         .por_rst_n         (por_rst_n),
         .connected         (connected),
         
-        // Device IOs
+        
         .dev_next_packet   (dev_next_packet),
         .dev_tx_fifo_wr    (dev_tx_fifo_wr),
         .dev_rx_fifo_read  (dev_rx_fifo_read),
@@ -98,7 +98,7 @@ module usb_mouse #(
         .dev_rst_n         (dev_rst_n),
         .dev_data_pid_valid(device_rx_data_pid_valid),
         
-        // Host IOs
+        
         .host_start_rst    (host_start_rst),
         .host_next_packet  (host_next_packet),
         .host_tx_fifo_wr   (host_tx_fifo_wr),
@@ -119,7 +119,7 @@ module usb_mouse #(
         .w_idle            (idle)
     );
 
-    // Host Side: Protocol Controller
+    
     host_protocol #(
         .CLK_FREQ(CLK_FREQ)
     ) u_host_protocol (
@@ -129,7 +129,7 @@ module usb_mouse #(
         .idle                   (idle),
         .speed                  (host_speed),
         
-        // Link Layer Interfaces
+        
         .host_reset_busy        (host_reset_busy),
         .host_tx_busy           (host_tx_busy),
         .host_tx_fifo_full      (host_tx_fifo_full),
@@ -147,7 +147,7 @@ module usb_mouse #(
         .host_tx_fifo_in        (host_tx_fifo_in),
         .host_tx_pid            (host_tx_pid),
         
-        // Software/Host IOs
+        
         .sw_status              (sw_status),
         .sw_request_valid       (sw_request_valid),
         .sw_request             (sw_request),
@@ -163,20 +163,21 @@ module usb_mouse #(
         .sw_rx_fifo_empty       (sw_rx_fifo_empty),
         .sw_rx_fifo_read        (sw_rx_fifo_read),
         .sw_rx_read_done        (sw_rx_read_done),
-        .sw_rx_fifo_out         (sw_rx_fifo_out)
+        .sw_rx_fifo_out         (sw_rx_fifo_out),
+        .sw_reset               (1'b0)
     );
 
-    // Device Side: Keyboard Protocol Controller
+    
     mouse_protocol #(
         .CLK_FREQ(CLK_FREQ)
     ) u_keyboard_protocol (
         .clk                      (clk),
-        .rst_n                    (dev_rst_n), // Driven by phy_link dev_rst_n
+        .rst_n                    (dev_rst_n), 
         .connected                (connected),
         .idle                     (idle),
         .speed                    (dev_speed),
         
-        // Link Layer Interfaces
+        
         .device_tx_busy           (dev_tx_busy),
         .device_tx_fifo_full      (dev_tx_fifo_full),
         .device_rx_data_pid_valid (device_rx_data_pid_valid),
@@ -193,7 +194,7 @@ module usb_mouse #(
         .device_tx_fifo_in        (dev_tx_fifo_in),
         .device_tx_pid            (dev_tx_pid),
         
-        // Endpoint IOs
+        
         .ep1_in                   (ep1_in),
         .ep1_valid                (ep1_valid),
         .ep1_sent                 (ep1_sent)

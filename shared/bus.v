@@ -2,7 +2,7 @@
 module bus (
     input host_dp, host_dm, device_dp, device_dm,
     input device_en, host_en, connected,
-    input [1:0] speed, // from device side
+    input [1:0] speed, 
     output reg dp, dm, idle
 );
     

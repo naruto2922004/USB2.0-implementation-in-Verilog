@@ -1,6 +1,6 @@
-// 2'b00 = low speed
-// 2'b01 = full speed
-// 2'b11 = high speed
+
+
+
 
 module tx_sim (
     input clk, rst_n, transfering,

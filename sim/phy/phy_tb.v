@@ -2,7 +2,7 @@
 
 module phy_tb;
 
-    // Inputs
+    
     reg clk;
     reg rst_n;
     reg high_speed;
@@ -10,18 +10,18 @@ module phy_tb;
     reg [7:0] tx_data;
     reg [1:0] speed;
 
-    // Outputs
+    
     wire [7:0] rx_data;
     wire rx_byte_valid;
     wire rx_packet_done;
     wire tx_packet_done;
     wire tx_buffer_loaded;
 
-    // Bidirectional lines (Inout loopback wires)
+    
     wire dp;
     wire dm;
 
-    // DUT
+    
     phy dut (
         .clk(clk),
         .rst_n(rst_n),
@@ -38,11 +38,11 @@ module phy_tb;
         .dm(dm)
     );
 
-    // Clock Generator
+    
     initial clk = 1'b0;
     always #10 clk = ~clk;
 
-    // Main Stimulus
+    
     initial begin
         rst_n       = 0;
         high_speed  = 1;
@@ -54,7 +54,7 @@ module phy_tb;
         rst_n = 1;
         @(posedge clk);
 
-        // --- Packet 1 ---
+        
         transfering = 1;
         tx_data = 8'h12;
 
@@ -74,7 +74,7 @@ module phy_tb;
         while (!tx_packet_done) @(posedge clk);
         repeat(5) @(posedge clk);
 
-        // --- Packet 2 ---
+        
         @(posedge clk);
         transfering = 1;
         tx_data = 8'hff;

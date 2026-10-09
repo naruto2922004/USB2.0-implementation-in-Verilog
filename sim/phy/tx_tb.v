@@ -49,19 +49,19 @@ module tx_tb;
         @(posedge clk);
 
         transfering = 1;
-        data = 8'h12; // 00010010
+        data = 8'h12; 
 
         while (!buffer_loaded)
             @(posedge clk);
 
         @(posedge clk);
-        data = 8'h34; // 00110100
+        data = 8'h34; 
 
         while (!buffer_loaded)
             @(posedge clk);
 
         @(posedge clk);
-        data = 8'h56; // 01010110
+        data = 8'h56; 
 
         while (!buffer_loaded)
             @(posedge clk);
@@ -81,19 +81,19 @@ module tx_tb;
         @(posedge clk);
 
         transfering = 1;
-        data = 8'h12; // 00010010
+        data = 8'h12; 
 
         while (!buffer_loaded)
             @(posedge clk);
 
         @(posedge clk);
-        data = 8'h34; // 00110100
+        data = 8'h34; 
 
         while (!buffer_loaded)
             @(posedge clk);
 
         @(posedge clk);
-        data = 8'h56; // 01010110
+        data = 8'h56; 
 
         while (!buffer_loaded)
             @(posedge clk);

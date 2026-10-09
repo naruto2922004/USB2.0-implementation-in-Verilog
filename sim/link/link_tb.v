@@ -101,7 +101,7 @@ always @(posedge clk) begin
     end
     else begin
 
-        // Default every clock
+        
         rx_read_done <= 1'b0;
 
         case (rx_status)

@@ -54,6 +54,6 @@ module async_fifo #(
     end
     
     assign empty = (wr_sync2 == rd_ptr_gray);
-    // msb and the 2nd msb needs to be opposit and the rest of the bits need to be equal
+    
     assign full = (wr_ptr_gray == {~rd_sync2[PTR_WIDTH:PTR_WIDTH-1], rd_sync2[PTR_WIDTH-2:0]});
 endmodule

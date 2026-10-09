@@ -2,11 +2,21 @@
 
 module usb_keyboard_tb;
 
-
-    localparam CLK_FREQ_SIM     = 48_000_000;  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    localparam CLK_FREQ_SIM     = 48_000_000;   
     localparam real CLK_PERIOD_NS = 20.833; 
 
-
+    
+    
+    
     reg clk;
     reg por_rst_n;
     reg connected;
@@ -32,7 +42,9 @@ module usb_keyboard_tb;
     reg         ep1_valid;
     wire        ep1_sent;
 
-
+    
+    
+    
     localparam [3:0] PROTO_DISCONNECTED  = 4'b0000;
     localparam [3:0] PROTO_NOT_READY     = 4'b0001;
     localparam [3:0] PROTO_CAN_TAKE_REQ  = 4'b0010;
@@ -42,7 +54,9 @@ module usb_keyboard_tb;
     localparam [3:0] PROTO_CRIT_ERROR    = 4'b0110;
     localparam [3:0] PROTO_ERROR         = 4'b0111;
 
-
+    
+    
+    
     localparam [63:0] REQ_SET_CONFIGURATION_1 = {
         8'h00, 8'h09, 8'h01, 8'h00, 8'h00, 8'h00, 8'h00, 8'h00
     };
@@ -56,6 +70,9 @@ module usb_keyboard_tb;
         8'h21, 8'h0B, 8'h01, 8'h00, 8'h00, 8'h00, 8'h00, 8'h00
     };
 
+    
+    
+    
     usb_keyboard #(
         .CLK_FREQ(CLK_FREQ_SIM),
         .MAX_SPEED(2'b11)
@@ -86,11 +103,17 @@ module usb_keyboard_tb;
         .ep1_sent(ep1_sent)
     );
 
-
+    
+    
+    
     initial clk = 1'b0;
     always #(CLK_PERIOD_NS/2.0) clk = ~clk;
 
-
+    
+    
+    
+    
+    
     reg chk_reset, chk_connect, chk_enum;
     reg chk_r1, chk_r2, chk_r3, chk_r4;
     reg chk_transfer, chk_rx_data, chk_reports;
@@ -116,7 +139,11 @@ module usb_keyboard_tb;
         chk_connect = 1'b1;
     end
 
-
+    
+    
+    
+    
+    
     initial begin
         ep1_in    = 64'hA1B2C3D4E5F60708;
         ep1_valid = 1'b0;
@@ -128,12 +155,15 @@ module usb_keyboard_tb;
         end else begin
             ep1_valid <= 1'b1;
             if (ep1_sent) begin
-                ep1_in <= ep1_in + 64'h0101_0101_0101_0101;
+                ep1_in <= ep1_in + 64'h0101_0101_0101_0101; 
                 reports_sent <= reports_sent + 1;
             end
         end
     end
 
+    
+    
+    
     initial begin
         sw_rx_fifo_read = 1'b0;
         sw_rx_read_done = 1'b0;
@@ -153,7 +183,9 @@ module usb_keyboard_tb;
         end
     end
 
-
+    
+    
+    
     task automatic send_request(input [63:0] req, output reg ok);
         begin
             wait (sw_status == PROTO_CAN_TAKE_REQ);
@@ -164,8 +196,11 @@ module usb_keyboard_tb;
             @(posedge clk);
             sw_request_valid = 1'b0;
 
+            
             wait (sw_status != PROTO_CAN_TAKE_REQ);
 
+            
+            
             wait (sw_status == PROTO_CAN_TAKE_REQ  ||
                   sw_status == PROTO_NOT_SUPPORTED ||
                   sw_status == PROTO_EP_STALLED    ||
@@ -197,9 +232,9 @@ module usb_keyboard_tb;
 
         @(posedge clk);
         sw_endpoint       = 4'd1;
-        sw_transfer_type  = 2'b01; // Interrupt
-        sw_direction      = 1'b1; // IN
-        sw_interval       = 8'd2; // shortened 
+        sw_transfer_type  = 2'b01; 
+        sw_direction      = 1'b1; 
+        sw_interval       = 8'd2; 
         sw_transfer_start = 1'b1;
         @(posedge clk);
         sw_transfer_start = 1'b0;
@@ -236,7 +271,10 @@ module usb_keyboard_tb;
         $finish;
     end
 
-
+    
+    
+    
+    
     function [127:0] status_name(input [3:0] s);
         case (s)
             PROTO_DISCONNECTED:  status_name = "DISCONNECTED";
@@ -251,13 +289,18 @@ module usb_keyboard_tb;
         endcase
     endfunction
 
-
+    
+    
+    
     initial begin
-        #20_000_000; //20ms
+        #20_000_000; 
         $display("[%0t] WATCHDOG TIMEOUT - simulation did not complete", $time);
         $finish;
     end
 
+    
+    
+    
     initial begin
         $dumpfile("usb_keyboard_tb.vcd");
         $dumpvars(0, usb_keyboard_tb);

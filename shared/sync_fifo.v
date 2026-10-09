@@ -1,4 +1,4 @@
-//PTR_WIDTH is log2(DEPTH)
+
 module sync_fifo #(
     parameter DEPTH = 1024,
     parameter WIDTH = 8,
